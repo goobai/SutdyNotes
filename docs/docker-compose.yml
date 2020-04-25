@@ -1,0 +1,32 @@
+version: "2.2"
+services:
+  rabbitmq:
+    image: "rabbitmq:3-management-alpine"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "goobai777xiexieie"
+      RABBITMQ_DEFAULT_USER: "goobai"
+      RABBITMQ_DEFAULT_PASS: "goobai777"
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./etc/:/etc/rabbitmq/
+      - ./data/:/var/lib/rabbitmq/
+      - ./logs/:/var/log/rabbitmq/
+  rabbitmq1:
+    #setup host name
+    hostname: myrabbitmq
+    #use docker images
+    image: rabbitmq:management
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "goobai777xiexieie"
+      RABBITMQ_DEFAULT_USER: "goobai"
+      RABBITMQ_DEFAULT_PASS: "goobai777"
+    #ports setting
+    ports:
+      - 15673:15672
+      - 5673:5672
+    restart: always
+    #volumes setting
+    volumes:
+      - ./data:/var/lib/rabbitmq8
