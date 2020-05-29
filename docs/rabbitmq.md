@@ -7,7 +7,7 @@
 192.18.0.2 node1
 192.18.0.3 node2
 192.18.0.4 node3
-``` 
+```
 2、设置各节点的cookie(/var/lib/rabbitmq/.erlang.cookie)
 
 3、配置集群。
@@ -23,4 +23,4 @@ rabbitmqctl join_cluster rabbit@node1
 rabbitmqctl start_app
 
 ```
-## 从集群中删除某个节点  
+## 从集群中删除某个节点
