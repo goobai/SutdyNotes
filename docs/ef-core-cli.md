@@ -7,11 +7,14 @@
 dotnet tool  install --global dotnet-ef
 
 ```
+
 ## ef-core 迁移数据
 
 ```shell
 #创建迁移
 dotnet ef migrations add migrationname
+#指定dbcontext创建迁移
+dotnet ef migrations add migrationname --context dbcontext
 
 #删除迁移
 dotnet ef migrations remove
