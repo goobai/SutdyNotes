@@ -38,7 +38,7 @@ docker build http://server/context.tar.gz
 
 ```shell script
 //保存镜像为文件 -o 指定保存的镜像名 ,save-file-name.tar 保存到本地的文件名,image-name docker中的镜像名
-docker save -o save-file-name.tar image-name 
+docker save -o save-file-name.tar image-name
 
 //将文件导入镜像
 docker load --input save-file-name.tar
@@ -96,7 +96,7 @@ docker container stop
 docker container ls -a
 
 #删除容器
-dicker container rm
+docker container rm
 
 #清理所有处于终止状态的容器
 docker container prune

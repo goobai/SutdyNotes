@@ -11,13 +11,13 @@ cd redis-5.0.4
 make
 ```
 
-##后台运行 
+## 后台运行
 修改redis.config ：~~daemonize no~~
 ```shell
-#daemonize yes 
+#daemonize yes
 ```
 
-##开启远程访问 
+## 开启远程访问 
 修改redis.config ：~~bind 127.0.0.1~~
 ```shell
 

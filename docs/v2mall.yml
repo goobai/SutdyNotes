@@ -15,7 +15,8 @@ services:
       MYSQL_PASSWORD: Goobai!1
     ports:
       - "3306:3306"
-
+    security_opt:
+      - seccomp:unconfined
     volumes:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/conf/my.conf:/etc/my.conf
@@ -34,7 +35,34 @@ services:
     image: nginx
     container_name: nginx
     ports:
-      - 5000:5000
+      - "3350:80"
+      - "3351:8001"
+    networks: ## 定义网络
+      nn: ## 加入的网络的名称
+        ipv4_address: 192.168.5.102 ## ipv4的ip地址
     volumes:
       - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/wwwroot:/usr/share/nginx/wwwroot
+  v2mall:
+    build:
+      context: ./v2mall
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+      - redis
+    ports:
+      - "3340:5000"
+    networks: ## 定义网络
+      nn: ## 加入的网络的名称
+        ipv4_address: 192.168.5.103 ## ipv4的ip地址
+    volumes:
+      - ./v2mall/log:/log
+      - ./v2mall/static:/static
+      - ./v2mall/Config/config.json:/app/Config/config.json
+networks: ##定义网络组
+  nn: ## 网络组名称
+    driver: bridge ## 网络的模式
+    ipam: ## 配置网络
+      driver: default
+      config:
+        - subnet: 192.168.5.0/24 ## ip地址网络 这里宿主机一般会是该网段的 192.168.5.1,所以不要设置自网段为1

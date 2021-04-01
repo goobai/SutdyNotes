@@ -31,7 +31,8 @@
 - 3、全文索引：全文索引（FULLTEXT）仅可以适用于MyISAM引擎的数据表；作用于CHAR、VARCHAR、TEXT数据类型的列。
 
 - 4、组合索引：将几个列作为一条索引进行检索，使用最左匹配原则。
-##建立索引的原则
+
+## 建立索引的原则
 ```text
 1，最左前缀匹配原则。
 2，等于（=）和in 可以乱序。
@@ -79,6 +80,7 @@
  use mysql;
  update user set host = '%' where user = 'root';
  update user set host = '%' where user = 'goobai';
+ grant all on *.* to 'goobai'@'%';
  GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'goobai'@'%';
  FLUSH   PRIVILEGES;
 
@@ -90,7 +92,7 @@ FLUSH PRIVILEGES;
 
 CREATE USER 'goobai'@'%' IDENTIFIED BY 'goobai777'
 
-ALTER USER 'mysql'@'%' IDENTIFIED WITH mysql_native_password BY 'Goobai!1';
+ALTER USER 'goobai'@'%' IDENTIFIED WITH mysql_native_password BY 'Goobai!1';
 
 show grants for mysql
 
@@ -132,9 +134,46 @@ flush privileges;
 #退出mysql
 exit
 ```
-### 
+### 参数设置
 ```shell script
 lower_case_table_names=0 表名存储为给定的大小和比较是区分大小写的
 lower_case_table_names = 1 表名存储在磁盘是小写的，但是比较的时候是不区分大小写
 lower_case_table_names=2 表名存储为给定的大小写但是比较的时候是小写的
+```
+### centos安装mysql
+```shell script
+原文链接：
+https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-centos-7
+
+
+访问：https://dev.mysql.com/downloads/repo/yum/ 选择安装版本及rpm链接
+
+
+wget https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm
+
+
+sudo rpm -ivh mysql57-community-release-el7-9.noarch.rpm
+
+
+sudo yum install mysql-server
+
+sudo systemctl start mysqld
+
+sudo systemctl status mysqld
+
+查看默认密码：sudo grep 'temporary password' /var/log/mysqld.log
+设置密码：sudo mysql_secure_installation
+Goobai!1
+
+修改修改/etc/my.cnf文件：
+default-authentication-plugin=mysql_native_password
+添加用户mysql：
+CREATE USER 'mysql'@'%' IDENTIFIED BY 'Mysql!1'
+授权：
+grant all on *.* to 'mysql'@'%';
+
+修改加密：
+ALTER USER 'mysql'@'%' IDENTIFIED WITH mysql_native_password BY 'Goobai!1';
+FLUSH PRIVILEGES;
+
 ```
